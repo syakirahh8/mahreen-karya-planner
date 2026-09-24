@@ -1,3 +1,4 @@
+import { motion } from 'motion/react'
 import { Check } from 'lucide-react'
 
 export default function OptionCard({
@@ -8,12 +9,15 @@ export default function OptionCard({
   disabled = false,
   hasError = false,
   onClick,
+  className = '',
 }) {
   return (
-    <button
+    <motion.button
       type="button"
       disabled={disabled}
       onClick={onClick}
+      whileHover={!disabled ? { y: -2 } : {}}
+      whileTap={!disabled ? { scale: 0.99 } : {}}
       className={`w-full p-4 rounded-2xl border-2 text-left transition-all relative flex items-center justify-between group focus:outline-none focus:ring-2 focus:ring-brand-lavender ${
         disabled
           ? 'bg-slate-100 border-slate-300 text-slate-400 cursor-not-allowed opacity-50'
@@ -21,8 +25,8 @@ export default function OptionCard({
           ? 'bg-rose-50 border-rose-500 shadow-sm'
           : isSelected
           ? 'bg-brand-lavender/30 border-brand-dark shadow-brutal translate-x-0.5'
-          : 'bg-white border-brand-dark hover:bg-brand-cream hover:border-brand-dark hover:-translate-y-0.5 shadow-brutal-sm'
-      }`}
+          : 'bg-white border-brand-dark hover:bg-brand-cream hover:border-brand-dark shadow-brutal-sm'
+      } ${className}`}
     >
       <div className="flex items-center gap-3.5 min-w-0">
         {Icon && (
@@ -63,6 +67,6 @@ export default function OptionCard({
       >
         <Check className={`w-3.5 h-3.5 stroke-[3] ${isSelected ? 'opacity-100' : 'opacity-0'}`} />
       </div>
-    </button>
+    </motion.button>
   )
 }

@@ -1,3 +1,4 @@
+import { motion } from 'motion/react'
 import { Star, ChevronRight, User } from 'lucide-react'
 
 export default function WhyUsSection() {
@@ -19,7 +20,7 @@ export default function WhyUsSection() {
     {
       num: '03. Community',
       badgeBg: 'bg-brand-yellow text-brand-dark',
-      cardBg: 'bg-brand-dark text-white',
+      cardBg: 'bg-white text-brand-dark',
       title: 'Grow Through Collaboration',
       desc: 'Terhubung dengan ratusan kreator sefrekuensi untuk saling menyemangati dan memberi feedback konstruktif.',
     },
@@ -30,7 +31,13 @@ export default function WhyUsSection() {
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
           {/* Left Column: Heading & Social Proof */}
-          <div className="lg:col-span-5 space-y-5 sm:space-y-6">
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: '-40px' }}
+            transition={{ duration: 0.5 }}
+            className="lg:col-span-5 space-y-5 sm:space-y-6"
+          >
             <div className="inline-flex">
               <span className="px-3 py-1 rounded-full bg-brand-lavender text-brand-dark font-heading font-extrabold text-[11px] sm:text-xs tracking-wider uppercase border-2 border-brand-dark shadow-brutal-sm">
                 EKOSISTEM KREATIF
@@ -68,7 +75,13 @@ export default function WhyUsSection() {
             </div>
 
             {/* Metrics Box */}
-            <div className="grid grid-cols-3 gap-1.5 sm:gap-3 p-3 sm:p-4 rounded-2xl bg-brand-cream border-2 border-brand-dark shadow-brutal text-center">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.45, delay: 0.2 }}
+              className="grid grid-cols-3 gap-1.5 sm:gap-3 p-3 sm:p-4 rounded-2xl bg-brand-cream border-2 border-brand-dark shadow-brutal text-center"
+            >
               <div>
                 <p className="text-lg sm:text-2xl font-heading font-black text-brand-dark">1500+</p>
                 <p className="text-[10px] sm:text-[11px] font-sans font-bold text-brand-muted">Karya Jadi</p>
@@ -81,15 +94,20 @@ export default function WhyUsSection() {
                 <p className="text-lg sm:text-2xl font-heading font-black text-brand-dark">98.5%</p>
                 <p className="text-[10px] sm:text-[11px] font-sans font-bold text-brand-muted">Kepuasan</p>
               </div>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
 
           {/* Right Column: 3 Feature Cards */}
           <div className="lg:col-span-7 space-y-4">
-            {listItems.map((item) => (
-              <div
+            {listItems.map((item, idx) => (
+              <motion.div
                 key={item.title}
-                className={`${item.cardBg} border-2 border-brand-dark rounded-2xl p-6 shadow-brutal hover:shadow-brutal-lg hover:-translate-y-0.5 transition-all group`}
+                initial={{ opacity: 0, x: 30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, margin: '-40px' }}
+                transition={{ duration: 0.45, delay: idx * 0.12 }}
+                whileHover={{ y: -4, transition: { duration: 0.2 } }}
+                className={`${item.cardBg} border-2 border-brand-dark rounded-2xl p-6 shadow-brutal hover:shadow-brutal-lg transition-shadow group cursor-default`}
               >
                 <div className="flex items-center justify-between mb-3">
                   <span
@@ -105,7 +123,7 @@ export default function WhyUsSection() {
                 <p className="text-xs sm:text-sm font-sans font-medium opacity-80 leading-relaxed">
                   {item.desc}
                 </p>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>

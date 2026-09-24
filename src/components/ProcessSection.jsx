@@ -1,3 +1,4 @@
+import { motion } from 'motion/react'
 import { YellowCube, LavenderDot } from './FloatingShapes'
 
 export default function ProcessSection() {
@@ -21,7 +22,7 @@ export default function ProcessSection() {
     {
       step: 'Step 3',
       badgeBg: 'bg-brand-yellow text-brand-dark',
-      cardBg: 'bg-brand-dark text-white',
+      cardBg: 'bg-white text-brand-dark',
       num: '03',
       title: 'Ambil Aksi Tiap Hari',
       desc: 'Konsisten luangkan waktu 30 menit per hari untuk mencicil progres karya hingga selesai.',
@@ -48,7 +49,13 @@ export default function ProcessSection() {
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 space-y-8 sm:space-y-12">
         {/* Section Header */}
-        <div className="space-y-2.5 sm:space-y-3 max-w-2xl">
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-40px' }}
+          transition={{ duration: 0.5 }}
+          className="space-y-2.5 sm:space-y-3 max-w-2xl"
+        >
           <div className="inline-flex">
             <span className="px-3 py-1 rounded-full bg-white text-brand-dark font-heading font-extrabold text-[11px] sm:text-xs tracking-wider uppercase border-2 border-brand-dark shadow-brutal-sm">
               ALUR BERKARYA
@@ -60,14 +67,19 @@ export default function ProcessSection() {
           <p className="text-xs sm:text-base text-brand-muted font-sans font-medium">
             4 langkah terarah dari sekadar angan-angan menjadi karya yang diakui publik.
           </p>
-        </div>
+        </motion.div>
 
         {/* 4 Steps Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-          {steps.map((item) => (
-            <div
+          {steps.map((item, idx) => (
+            <motion.div
               key={item.step}
-              className={`${item.cardBg} border-2 border-brand-dark rounded-2xl p-5 sm:p-6 shadow-brutal flex flex-col justify-between min-h-[220px] sm:min-h-[250px] hover:-translate-y-1 hover:shadow-brutal-lg transition-all`}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-40px' }}
+              transition={{ duration: 0.45, delay: idx * 0.1 }}
+              whileHover={{ y: -6, transition: { duration: 0.2 } }}
+              className={`${item.cardBg} border-2 border-brand-dark rounded-2xl p-5 sm:p-6 shadow-brutal flex flex-col justify-between min-h-[220px] sm:min-h-[250px] hover:shadow-brutal-lg transition-shadow cursor-default`}
             >
               <div className="flex items-center justify-between">
                 <span
@@ -88,7 +100,7 @@ export default function ProcessSection() {
                   {item.desc}
                 </p>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>
