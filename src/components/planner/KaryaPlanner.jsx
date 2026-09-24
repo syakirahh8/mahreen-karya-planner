@@ -192,16 +192,19 @@ export default function KaryaPlanner() {
     try {
       const dataUrl = await toPng(resultCardRef.current, {
         cacheBust: true,
-        pixelRatio: 2,
-        backgroundColor: '#FFF9E3',
+        pixelRatio: 3, // Ultra-sharp crystal quality
+        backgroundColor: '#FFFDF7',
+        quality: 1,
       })
       const link = document.createElement('a')
-      const fileName = `KaryaPlan-${interest.replace(/\s+/g, '')}-${Date.now()}.png`
+      const safeInterest = (interest || 'Kreator').replace(/[^a-zA-Z0-9]/g, '')
+      const fileName = `Mahreen-KaryaPlan-${safeInterest}-${Date.now().toString().slice(-4)}.png`
       link.download = fileName
       link.href = dataUrl
       link.click()
-      setToastMessage('Karya Plan berhasil diunduh sebagai gambar PNG! 📥')
-    } catch {
+      setToastMessage('Karya Plan berhasil diunduh dalam kualitas Ultra-HD! 📥✨')
+    } catch (err) {
+      console.error(err)
       setToastMessage('Gagal mengunduh gambar. Silakan coba lagi.')
     } finally {
       setIsDownloading(false)
@@ -256,23 +259,23 @@ export default function KaryaPlanner() {
   }
 
   return (
-    <section id="planner" className="relative py-16 sm:py-24 bg-white border-b-2 border-brand-dark/10">
+    <section id="planner" className="relative py-12 sm:py-24 bg-white border-b-2 border-brand-dark/10">
       <Toast message={toastMessage} onClose={() => setToastMessage('')} />
 
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 space-y-10 sm:space-y-12">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 space-y-8 sm:space-y-12">
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto space-y-4">
+        <div className="text-center max-w-3xl mx-auto space-y-3 sm:space-y-4">
           <div className="inline-flex">
-            <span className="px-4 py-1.5 rounded-full bg-brand-yellow text-brand-dark font-heading font-black text-xs tracking-wider uppercase border-2 border-brand-dark shadow-brutal-sm">
+            <span className="px-3.5 sm:px-4 py-1 sm:py-1.5 rounded-full bg-brand-yellow text-brand-dark font-heading font-black text-[11px] sm:text-xs tracking-wider uppercase border-2 border-brand-dark shadow-brutal-sm">
               FITUR UTAMA: MULTI-STEP PLANNER
             </span>
           </div>
 
-          <h2 className="text-3xl sm:text-5xl font-heading font-black tracking-tight text-brand-dark">
+          <h2 className="text-2xl sm:text-4xl lg:text-5xl font-heading font-black tracking-tight text-brand-dark">
             Rancang Karya Pertamamu Secara Instan
           </h2>
 
-          <p className="text-sm sm:text-base text-brand-muted font-sans font-medium leading-relaxed">
+          <p className="text-xs sm:text-base text-brand-muted font-sans font-medium leading-relaxed max-w-2xl mx-auto">
             Susun rencana karyamu melalui 4 tahap mudah tanpa perlu login. Simpan progresmu dan dapatkan dokumen rencana aksi karyamu secara instan!
           </p>
         </div>
@@ -329,10 +332,10 @@ export default function KaryaPlanner() {
             />
 
             {/* Form (Left) & Live Preview (Right) */}
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start">
               {/* Left Column: Form Steps */}
               <div className="lg:col-span-7 space-y-6">
-                <div className="p-6 sm:p-7 rounded-3xl bg-white border-2 border-brand-dark shadow-brutal space-y-6">
+                <div className="p-4 sm:p-7 rounded-2xl sm:rounded-3xl bg-white border-2 border-brand-dark shadow-brutal space-y-5 sm:space-y-6">
                   {/* ================= STEP 1: INTEREST ================= */}
                   {currentStep === 1 && (
                     <div className="space-y-4">
@@ -565,7 +568,7 @@ export default function KaryaPlanner() {
               </div>
 
               {/* Right Column (Desktop) / Bottom (Mobile): Live Preview */}
-              <div className="lg:col-span-5 sticky top-24">
+              <div className="lg:col-span-5 lg:sticky lg:top-24">
                 <LivePreview
                   interest={interest}
                   impact={impact}

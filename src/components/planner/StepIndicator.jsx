@@ -85,55 +85,57 @@ export default function StepIndicator({ currentStep, onSelectStep, maxUnlockedSt
       </div>
 
       {/* Mobile Stepper Compact */}
-      <div className="sm:hidden flex items-center justify-between p-3 rounded-2xl bg-brand-cream border-2 border-brand-dark shadow-brutal-sm">
-        {steps.map((step, idx) => {
-          const status = getStepStatus(step.id)
-          const isClickable = step.id <= maxUnlockedStep && step.id !== currentStep
+      <div className="sm:hidden p-3 rounded-2xl bg-brand-cream border-2 border-brand-dark shadow-brutal-sm">
+        <div className="flex items-center justify-between">
+          {steps.map((step, idx) => {
+            const status = getStepStatus(step.id)
+            const isClickable = step.id <= maxUnlockedStep && step.id !== currentStep
 
-          return (
-            <div key={step.id} className="flex items-center flex-1 justify-center relative">
-              <button
-                type="button"
-                disabled={!isClickable}
-                onClick={() => isClickable && onSelectStep(step.id)}
-                className={`flex flex-col items-center gap-1 transition-all ${
-                  !isClickable && status === 'locked' ? 'opacity-40 cursor-not-allowed' : 'cursor-pointer'
-                }`}
-              >
-                <span
-                  className={`w-8 h-8 rounded-full text-xs font-heading font-black flex items-center justify-center border-2 transition-all ${
-                    status === 'active'
-                      ? 'bg-brand-lavender text-brand-dark border-brand-dark scale-110 shadow-brutal-sm'
-                      : status === 'completed'
-                      ? 'bg-brand-yellow text-brand-dark border-brand-dark'
-                      : 'bg-white text-slate-400 border-slate-300'
+            return (
+              <div key={step.id} className="flex items-center flex-1 last:flex-none">
+                <button
+                  type="button"
+                  disabled={!isClickable}
+                  onClick={() => isClickable && onSelectStep(step.id)}
+                  className={`flex flex-col items-center gap-1 transition-all mx-auto ${
+                    !isClickable && status === 'locked' ? 'opacity-40 cursor-not-allowed' : 'cursor-pointer'
                   }`}
                 >
-                  {status === 'completed' ? (
-                    <Check className="w-3.5 h-3.5 stroke-[3]" />
-                  ) : (
-                    step.num
-                  )}
-                </span>
-                <span
-                  className={`text-[10px] font-heading font-bold ${
-                    status === 'active' ? 'text-brand-dark font-extrabold' : 'text-brand-muted'
-                  }`}
-                >
-                  {step.title}
-                </span>
-              </button>
+                  <span
+                    className={`w-7 h-7 xs:w-8 xs:h-8 rounded-full text-xs font-heading font-black flex items-center justify-center border-2 transition-all ${
+                      status === 'active'
+                        ? 'bg-brand-lavender text-brand-dark border-brand-dark scale-110 shadow-brutal-sm'
+                        : status === 'completed'
+                        ? 'bg-brand-yellow text-brand-dark border-brand-dark'
+                        : 'bg-white text-slate-400 border-slate-300'
+                    }`}
+                  >
+                    {status === 'completed' ? (
+                      <Check className="w-3.5 h-3.5 stroke-[3]" />
+                    ) : (
+                      step.num
+                    )}
+                  </span>
+                  <span
+                    className={`text-[9px] xs:text-[10px] font-heading font-bold truncate max-w-[55px] text-center ${
+                      status === 'active' ? 'text-brand-dark font-extrabold' : 'text-brand-muted'
+                    }`}
+                  >
+                    {step.title}
+                  </span>
+                </button>
 
-              {idx < steps.length - 1 && (
-                <div
-                  className={`h-0.5 flex-1 mx-1 ${
-                    step.id < currentStep ? 'bg-brand-dark' : 'bg-slate-300'
-                  }`}
-                />
-              )}
-            </div>
-          )
-        })}
+                {idx < steps.length - 1 && (
+                  <div
+                    className={`h-0.5 flex-1 min-w-[6px] mx-1 ${
+                      step.id < currentStep ? 'bg-brand-dark' : 'bg-slate-300'
+                    }`}
+                  />
+                )}
+              </div>
+            )
+          })}
+        </div>
       </div>
     </div>
   )

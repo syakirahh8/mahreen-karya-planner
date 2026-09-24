@@ -26,33 +26,33 @@ export default function WhyUsSection() {
   ]
 
   return (
-    <section id="komunitas" className="relative py-20 bg-white border-b-2 border-brand-dark/10">
+    <section id="komunitas" className="relative py-12 sm:py-20 bg-white border-b-2 border-brand-dark/10">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
           {/* Left Column: Heading & Social Proof */}
-          <div className="lg:col-span-5 space-y-6">
+          <div className="lg:col-span-5 space-y-5 sm:space-y-6">
             <div className="inline-flex">
-              <span className="px-3.5 py-1 rounded-full bg-brand-lavender text-brand-dark font-heading font-extrabold text-xs tracking-wider uppercase border-2 border-brand-dark shadow-brutal-sm">
+              <span className="px-3 py-1 rounded-full bg-brand-lavender text-brand-dark font-heading font-extrabold text-[11px] sm:text-xs tracking-wider uppercase border-2 border-brand-dark shadow-brutal-sm">
                 EKOSISTEM KREATIF
               </span>
             </div>
 
-            <h2 className="text-3xl sm:text-5xl font-heading font-black tracking-tight text-brand-dark leading-[1.15]">
+            <h2 className="text-2xl sm:text-4xl lg:text-5xl font-heading font-black tracking-tight text-brand-dark leading-[1.2] sm:leading-[1.15]">
               Tempat untuk Memulai Karya Pertamamu
             </h2>
 
-            <p className="text-sm sm:text-base text-brand-muted font-sans font-medium leading-relaxed">
+            <p className="text-xs sm:text-base text-brand-muted font-sans font-medium leading-relaxed">
               Kami hadir untuk mendampingi kreator, pemikir, mahasiswa, dan perancang karya di setiap fase perjalanan mereka dari nol hingga tuntas.
             </p>
 
             {/* Social Avatars Proof */}
-            <div className="flex items-center gap-3 pt-2">
+            <div className="flex flex-wrap items-center gap-3 pt-1 sm:pt-2">
               <div className="flex -space-x-2">
                 {['#FCE762', '#9DA8EC', '#5F6479', '#FFF9E3'].map((bg, idx) => (
                   <div
                     key={idx}
                     style={{ backgroundColor: bg }}
-                    className="w-10 h-10 rounded-full border-2 border-brand-dark flex items-center justify-center font-heading font-bold text-xs shadow-brutal-sm"
+                    className="w-9 h-9 sm:w-10 sm:h-10 rounded-full border-2 border-brand-dark flex items-center justify-center font-heading font-bold text-xs shadow-brutal-sm shrink-0"
                   >
                     👤
                   </div>
@@ -68,18 +68,18 @@ export default function WhyUsSection() {
             </div>
 
             {/* Metrics Box */}
-            <div className="grid grid-cols-3 gap-3 p-4 rounded-2xl bg-brand-cream border-2 border-brand-dark shadow-brutal text-center">
+            <div className="grid grid-cols-3 gap-1.5 sm:gap-3 p-3 sm:p-4 rounded-2xl bg-brand-cream border-2 border-brand-dark shadow-brutal text-center">
               <div>
-                <p className="text-xl sm:text-2xl font-heading font-black text-brand-dark">1500+</p>
-                <p className="text-[11px] font-sans font-bold text-brand-muted">Karya Jadi</p>
+                <p className="text-lg sm:text-2xl font-heading font-black text-brand-dark">1500+</p>
+                <p className="text-[10px] sm:text-[11px] font-sans font-bold text-brand-muted">Karya Jadi</p>
               </div>
-              <div className="border-x-2 border-brand-dark/20">
-                <p className="text-xl sm:text-2xl font-heading font-black text-brand-dark">24</p>
-                <p className="text-[11px] font-sans font-bold text-brand-muted">Komunitas</p>
+              <div className="border-x-2 border-brand-dark/20 px-1">
+                <p className="text-lg sm:text-2xl font-heading font-black text-brand-dark">24</p>
+                <p className="text-[10px] sm:text-[11px] font-sans font-bold text-brand-muted">Komunitas</p>
               </div>
               <div>
-                <p className="text-xl sm:text-2xl font-heading font-black text-brand-dark">98.5%</p>
-                <p className="text-[11px] font-sans font-bold text-brand-muted">Kepuasan</p>
+                <p className="text-lg sm:text-2xl font-heading font-black text-brand-dark">98.5%</p>
+                <p className="text-[10px] sm:text-[11px] font-sans font-bold text-brand-muted">Kepuasan</p>
               </div>
             </div>
           </div>

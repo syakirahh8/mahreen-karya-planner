@@ -11,7 +11,7 @@ export default function LivePreview({
 
   return (
     <div className="w-full">
-      <div className="border-2 border-brand-dark rounded-3xl bg-brand-cream p-6 sm:p-7 shadow-brutal-lg space-y-6 relative overflow-hidden transition-all">
+      <div className="border-2 border-brand-dark rounded-2xl sm:rounded-3xl bg-brand-cream p-4 sm:p-7 shadow-brutal sm:shadow-brutal-lg space-y-5 sm:space-y-6 relative overflow-hidden transition-all">
         {/* Document Header Tag */}
         <div className="flex items-center justify-between border-b-2 border-brand-dark/15 pb-4">
           <div className="flex items-center gap-2">
@@ -32,13 +32,20 @@ export default function LivePreview({
         </div>
 
         {/* Title */}
-        <div>
-          <h3 className="text-2xl sm:text-3xl font-heading font-black tracking-tight text-brand-dark">
-            MY KARYA PLAN
-          </h3>
-          <p className="text-xs text-brand-muted font-sans font-medium mt-1">
-            Rencana Aksi Pribadi • #BerkaryaUntukIndonesia
-          </p>
+        <div className="flex items-center justify-between gap-3">
+          <div>
+            <h3 className="text-2xl sm:text-3xl font-heading font-black tracking-tight text-brand-dark">
+              MY KARYA PLAN
+            </h3>
+            <p className="text-xs text-brand-muted font-sans font-medium mt-1">
+              Rencana Aksi Pribadi • #BerkaryaUntukIndonesia
+            </p>
+          </div>
+          <img
+            src="/images/logo-black.png"
+            alt="Mahreen Indonesia"
+            className="h-6 w-auto object-contain shrink-0 hidden sm:block opacity-75"
+          />
         </div>
 
         {/* Metadata Grid: My Field & I Care About */}
