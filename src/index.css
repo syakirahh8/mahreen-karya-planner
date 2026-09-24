@@ -1,0 +1,50 @@
+@import "tailwindcss";
+
+@theme {
+  --font-heading: "Bricolage Grotesque", sans-serif;
+  --font-sans: "Manrope", sans-serif;
+
+  /* Custom Palette dari Gambar */
+  --color-brand-dark: #1A1D26;
+  --color-brand-lavender: #9DA8EC;
+  --color-brand-yellow: #FCE762;
+  --color-brand-white: #FFFFFF;
+  --color-brand-muted: #5F6479;
+  --color-brand-cream: #FFF9E3;
+
+  /* Aliases singkat */
+  --color-dark: #1A1D26;
+  --color-lavender: #9DA8EC;
+  --color-yellow: #FCE762;
+  --color-muted: #5F6479;
+  --color-cream: #FFF9E3;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    background-color: #FFFFFF;
+    color: #1A1D26;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+  }
+}
+
+/* Custom Neo-Brutalist / Playful Shadow Styles */
+.shadow-brutal-sm {
+  box-shadow: 2px 2px 0px #1A1D26;
+}
+
+.shadow-brutal {
+  box-shadow: 4px 4px 0px #1A1D26;
+}
+
+.shadow-brutal-lg {
+  box-shadow: 6px 6px 0px #1A1D26;
+}
