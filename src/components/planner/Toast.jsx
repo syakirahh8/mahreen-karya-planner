@@ -14,8 +14,7 @@ export default function Toast({ message, onClose }) {
           type="button"
           onClick={onClose}
           className="p-1 text-brand-muted hover:text-white transition-colors"
-          aria-label="Tutup notifikasi"
-        >
+          aria-label="Tutup notifikasi">
           <X className="w-4 h-4" />
         </button>
       </div>

@@ -16,7 +16,7 @@ export default function ProcessSection() {
       badgeBg: 'bg-brand-lavender text-brand-dark',
       cardBg: 'bg-white text-brand-dark',
       num: '02',
-      title: 'Rancang Karya Plan',
+      title: 'Susun Rencana Karya',
       desc: 'Pecah ide besar menjadi langkah-langkah mikro yang terukur, realistis, dan jelas.',
     },
     {
@@ -24,7 +24,7 @@ export default function ProcessSection() {
       badgeBg: 'bg-brand-yellow text-brand-dark',
       cardBg: 'bg-white text-brand-dark',
       num: '03',
-      title: 'Ambil Aksi Tiap Hari',
+      title: 'Ambil Langkah Pertama',
       desc: 'Konsisten luangkan waktu 30 menit per hari untuk mencicil progres karya hingga selesai.',
     },
     {
@@ -32,14 +32,13 @@ export default function ProcessSection() {
       badgeBg: 'bg-brand-cream text-brand-dark',
       cardBg: 'bg-white text-brand-dark',
       num: '04',
-      title: 'Sebarkan Dampak',
+      title: 'Kembangkan Karyamu',
       desc: 'Publikasikan karyamu, bangun portofolio bereputasi, dan raih peluang berharga.',
     },
   ]
 
   return (
     <section id="cara-kerja" className="relative py-12 sm:py-20 bg-brand-cream border-b-2 border-brand-dark/10">
-      {/* Decorative accent */}
       <div className="absolute top-8 left-10 hidden sm:block">
         <YellowCube className="rotate-12 scale-90" />
       </div>
@@ -54,8 +53,7 @@ export default function ProcessSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-40px' }}
           transition={{ duration: 0.5 }}
-          className="space-y-2.5 sm:space-y-3 max-w-2xl"
-        >
+          className="space-y-2.5 sm:space-y-3 max-w-2xl">
           <div className="inline-flex">
             <span className="px-3 py-1 rounded-full bg-white text-brand-dark font-heading font-extrabold text-[11px] sm:text-xs tracking-wider uppercase border-2 border-brand-dark shadow-brutal-sm">
               ALUR BERKARYA
@@ -65,7 +63,7 @@ export default function ProcessSection() {
             Perjalanan Sederhana Menuju Karya Nyata
           </h2>
           <p className="text-xs sm:text-base text-brand-muted font-sans font-medium">
-            4 langkah terarah dari sekadar angan-angan menjadi karya yang diakui publik.
+            4 langkah sederhana untuk mengubah ide menjadi rencana karya yang siap dimulai
           </p>
         </motion.div>
 
@@ -79,12 +77,10 @@ export default function ProcessSection() {
               viewport={{ once: true, margin: '-40px' }}
               transition={{ duration: 0.45, delay: idx * 0.1 }}
               whileHover={{ y: -6, transition: { duration: 0.2 } }}
-              className={`${item.cardBg} border-2 border-brand-dark rounded-2xl p-5 sm:p-6 shadow-brutal flex flex-col justify-between min-h-[220px] sm:min-h-[250px] hover:shadow-brutal-lg transition-shadow cursor-default`}
-            >
+              className={`${item.cardBg} border-2 border-brand-dark rounded-2xl p-5 sm:p-6 shadow-brutal flex flex-col justify-between min-h-[220px] sm:min-h-[250px] hover:shadow-brutal-lg transition-shadow cursor-default`}>
               <div className="flex items-center justify-between">
                 <span
-                  className={`text-xs font-heading font-extrabold px-3 py-1 rounded-full border border-brand-dark ${item.badgeBg}`}
-                >
+                  className={`text-xs font-heading font-extrabold px-3 py-1 rounded-full border border-brand-dark ${item.badgeBg}`}>
                   {item.step}
                 </span>
                 <span className="text-xs font-mono font-bold opacity-60">

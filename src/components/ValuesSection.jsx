@@ -14,19 +14,19 @@ export default function ValuesSection() {
       num: '02',
       title: 'Grow',
       bg: 'bg-brand-lavender',
-      text: 'Kembangkan potensi diri bersama kurikulum & alur berkarya yang terarah.',
+      text: 'Kembangkan potensi diri melalui proses berkarya yang lebih terarah.',
     },
     {
       num: '03',
       title: 'Collaborate',
       bg: 'bg-white',
-      text: 'Temukan rekan kolaborasi untuk mewujudkan ide besar menjadi nyata bersama.',
+      text: 'Siapkan idemu dengan lebih jelas agar mudah dibagikan, didiskusikan, dan dikembangkan bersama.',
     },
     {
       num: '04',
       title: 'Impact',
       bg: 'bg-brand-yellow',
-      text: 'Bagikan hasil karyamu ke audiens luas dan berikan dampak positif bagi sekitar.',
+      text: 'Mulai dari langkah sederhana dan kembangkan idemu menjadi karya yang memberi manfaat.',
     },
   ]
 
@@ -39,12 +39,11 @@ export default function ValuesSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-40px' }}
           transition={{ duration: 0.5 }}
-          className="flex flex-col md:flex-row md:items-end justify-between gap-4 sm:gap-6"
-        >
+          className="flex flex-col md:flex-row md:items-end justify-between gap-4 sm:gap-6">
           <div className="space-y-2.5 sm:space-y-3 max-w-xl">
             <div className="inline-flex items-center gap-2">
               <span className="px-3 py-1 rounded-full bg-brand-lavender text-brand-dark font-heading font-extrabold text-[11px] sm:text-xs tracking-wider uppercase border-2 border-brand-dark shadow-brutal-sm">
-                WHY US / NILAI KAMI
+                NILAI KAMI
               </span>
               <YellowCube className="scale-75" />
             </div>
@@ -54,11 +53,11 @@ export default function ValuesSection() {
           </div>
 
           <p className="max-w-md text-xs sm:text-base text-brand-muted font-sans font-medium leading-relaxed">
-            Kami menyediakan ruang yang aman dan terstruktur agar setiap ide yang ada di kepalamu bisa dirawat, dieksekusi, hingga menghasilkan karya nyata.
+            Kami menyediakan alur yang sederhana dan terstruktur agar ide di kepalamu lebih mudah disusun menjadi rencana karya yang bisa mulai dikerjakan.
           </p>
         </motion.div>
 
-        {/* 4 Feature Cards Grid */}
+        {/* Cards Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
           {cards.map((card, idx) => (
             <motion.div
@@ -68,8 +67,7 @@ export default function ValuesSection() {
               viewport={{ once: true, margin: '-40px' }}
               transition={{ duration: 0.45, delay: idx * 0.1 }}
               whileHover={{ y: -6, transition: { duration: 0.2 } }}
-              className={`${card.bg} border-2 border-brand-dark rounded-2xl p-5 sm:p-7 shadow-brutal flex flex-col justify-between min-h-[220px] sm:min-h-[260px] hover:shadow-brutal-lg transition-shadow group cursor-default`}
-            >
+              className={`${card.bg} border-2 border-brand-dark rounded-2xl p-5 sm:p-7 shadow-brutal flex flex-col justify-between min-h-[220px] sm:min-h-[260px] hover:shadow-brutal-lg transition-shadow group cursor-default`}>
               <div className="flex items-center justify-between">
                 <span className="w-8 h-8 rounded-full bg-brand-dark text-white font-heading font-bold text-xs flex items-center justify-center">
                   {card.num}

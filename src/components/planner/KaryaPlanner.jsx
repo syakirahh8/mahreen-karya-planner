@@ -24,25 +24,22 @@ import LivePreview from './LivePreview'
 import ResultCard from './ResultCard'
 import ActionButtons from './ActionButtons'
 import Toast from './Toast'
+import ResetModal from './ResetModal'
 
 const LOCAL_STORAGE_KEY = 'mahreen_karya_planner_v2'
 
 function getSavedData() {
   try {
-    // Clear previous test data so inputs always start clean with placeholders
     localStorage.removeItem('mahreen_karya_planner_data')
     const saved = localStorage.getItem(LOCAL_STORAGE_KEY)
     if (saved) return JSON.parse(saved)
   } catch {
-    // Ignore storage parse error
   }
   return null
 }
 
 export default function KaryaPlanner() {
   const initial = getSavedData()
-
-  // 1. Initial State loaded synchronously
   const [currentStep, setCurrentStep] = useState(initial?.currentStep || 1)
   const [interest, setInterest] = useState(initial?.interest || '')
   const [customInterest, setCustomInterest] = useState(initial?.customInterest || '')
@@ -54,6 +51,7 @@ export default function KaryaPlanner() {
   const [errors, setErrors] = useState({})
   const [isDownloading, setIsDownloading] = useState(false)
   const [toastMessage, setToastMessage] = useState('')
+  const [showResetModal, setShowResetModal] = useState(false)
 
   const [maxUnlockedStep, setMaxUnlockedStep] = useState(() => {
     let unlocked = 1
@@ -66,8 +64,6 @@ export default function KaryaPlanner() {
   })
 
   const resultCardRef = useRef(null)
-
-  // Step 1 Options: Interest
   const interestOptions = [
     { id: 'Technology', label: 'Technology', desc: 'Software, Web, AI, & Solusi Digital', icon: Code2 },
     { id: 'Creative', label: 'Creative', desc: 'Desain Grafis, Video, Musik, & Seni Visual', icon: Palette },
@@ -76,7 +72,6 @@ export default function KaryaPlanner() {
     { id: 'Lainnya', label: 'Lainnya (Tulis Sendiri)', desc: 'Tulis bidang minat unikmu jika belum ada di opsi', icon: PenTool },
   ]
 
-  // Step 2 Options: Impact Area
   const impactOptions = [
     { id: 'Education', label: 'Education', desc: 'Akses belajar, literasi, & pengembangan skill', icon: GraduationCap },
     { id: 'UMKM', label: 'UMKM', desc: 'Pemberdayaan usaha mikro & ekonomi lokal', icon: Store },
@@ -86,11 +81,9 @@ export default function KaryaPlanner() {
     { id: 'Lainnya', label: 'Lainnya (Tulis Sendiri)', desc: 'Tulis area dampak spesifik yang ingin kamu sentuh', icon: PenTool },
   ]
 
-  // Effective values for outputs
   const effectiveInterest = interest === 'Lainnya' ? customInterest.trim() : interest
   const effectiveImpact = impact === 'Lainnya' ? customImpact.trim() : impact
 
-  // Save to localStorage on change
   useEffect(() => {
     const dataToSave = {
       interest,
@@ -106,11 +99,9 @@ export default function KaryaPlanner() {
     try {
       localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(dataToSave))
     } catch {
-      // Ignore quota error
     }
   }, [interest, customInterest, impact, customImpact, idea, firstAction, currentStep, maxUnlockedStep, isSubmitted])
 
-  // Auto-dismiss toast
   useEffect(() => {
     if (toastMessage) {
       const timer = setTimeout(() => setToastMessage(''), 3500)
@@ -118,7 +109,6 @@ export default function KaryaPlanner() {
     }
   }, [toastMessage])
 
-  // Select Interest Handler
   const handleSelectInterest = (val) => {
     setInterest(val)
     if (val !== 'Lainnya' || customInterest.trim()) {
@@ -127,7 +117,6 @@ export default function KaryaPlanner() {
     setErrors((prev) => ({ ...prev, interest: undefined }))
   }
 
-  // Select Impact Handler
   const handleSelectImpact = (val) => {
     setImpact(val)
     if (val !== 'Lainnya' || customImpact.trim()) {
@@ -136,7 +125,6 @@ export default function KaryaPlanner() {
     setErrors((prev) => ({ ...prev, impact: undefined }))
   }
 
-  // Change Idea Handler
   const handleChangeIdea = (val) => {
     setIdea(val)
     if (val.trim()) {
@@ -147,7 +135,6 @@ export default function KaryaPlanner() {
     }
   }
 
-  // Step Navigation Validators
   const handleNext = () => {
     setErrors({})
 
@@ -194,7 +181,6 @@ export default function KaryaPlanner() {
     }
   }
 
-  // Final Submit
   const handleSubmit = (e) => {
     if (e) e.preventDefault()
     setErrors({})
@@ -217,7 +203,6 @@ export default function KaryaPlanner() {
     setToastMessage('Karya Plan berhasil dibuat.')
   }
 
-  // Action: Unduh Karya Plan PNG (Full, Centered, and Crystal Clear)
   const handleDownload = async () => {
     if (!resultCardRef.current) return
     setIsDownloading(true)
@@ -262,7 +247,6 @@ export default function KaryaPlanner() {
     }
   }
 
-  // Action: Bagikan Karya
   const handleShare = async () => {
     const currentEffectiveInterest = interest === 'Lainnya' ? customInterest.trim() : interest
     const currentEffectiveImpact = impact === 'Lainnya' ? customImpact.trim() : impact
@@ -277,7 +261,6 @@ export default function KaryaPlanner() {
         })
         setToastMessage('Berhasil dibagikan.')
       } catch {
-        // User cancelled or fallback
       }
     } else {
       try {
@@ -289,43 +272,48 @@ export default function KaryaPlanner() {
     }
   }
 
-  // Action: Edit Rencana
+  // Edit Rencana
   const handleEdit = () => {
     setIsSubmitted(false)
     setCurrentStep(1)
   }
 
-  // Action: Buat Rencana Baru (Reset)
   const handleReset = () => {
-    if (window.confirm('Apakah kamu yakin ingin mereset seluruh rencana dan membuat baru dari awal?')) {
-      localStorage.removeItem(LOCAL_STORAGE_KEY)
-      setInterest('')
-      setCustomInterest('')
-      setImpact('')
-      setCustomImpact('')
-      setIdea('')
-      setFirstAction('')
-      setCurrentStep(1)
-      setMaxUnlockedStep(1)
-      setIsSubmitted(false)
-      setErrors({})
-      setToastMessage('Rencana telah direset. Siap membuat karya baru.')
-    }
+    setShowResetModal(true)
+  }
+
+  const handleConfirmReset = () => {
+    localStorage.removeItem(LOCAL_STORAGE_KEY)
+    setInterest('')
+    setCustomInterest('')
+    setImpact('')
+    setCustomImpact('')
+    setIdea('')
+    setFirstAction('')
+    setCurrentStep(1)
+    setMaxUnlockedStep(1)
+    setIsSubmitted(false)
+    setErrors({})
+    setShowResetModal(false)
+    setToastMessage('Rencana telah direset. Siap membuat karya baru.')
   }
 
   return (
     <section id="planner" className="relative py-12 sm:py-24 bg-white border-b-2 border-brand-dark/10">
       <Toast message={toastMessage} onClose={() => setToastMessage('')} />
+      <ResetModal
+        isOpen={showResetModal}
+        onClose={() => setShowResetModal(false)}
+        onConfirm={handleConfirmReset}
+      />
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 space-y-8 sm:space-y-12">
-        {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-40px' }}
           transition={{ duration: 0.5 }}
-          className="text-center max-w-3xl mx-auto space-y-3 sm:space-y-4"
-        >
+          className="text-center max-w-3xl mx-auto space-y-3 sm:space-y-4">
           <div className="inline-flex">
             <span className="px-3.5 sm:px-4 py-1 sm:py-1.5 rounded-full bg-brand-yellow text-brand-dark font-heading font-black text-[11px] sm:text-xs tracking-wider uppercase border-2 border-brand-dark shadow-brutal-sm">
               FITUR UTAMA: MULTI-STEP PLANNER
@@ -333,24 +321,20 @@ export default function KaryaPlanner() {
           </div>
 
           <h2 className="text-2xl sm:text-4xl lg:text-5xl font-heading font-black tracking-tight text-brand-dark">
-            Rancang Karya Pertamamu Secara Instan
+            Rancang Karya Pertamamu dalam 4 Langkah
           </h2>
 
           <p className="text-xs sm:text-base text-brand-muted font-sans font-medium leading-relaxed max-w-2xl mx-auto">
-            Susun rencana karyamu melalui 4 tahap mudah tanpa perlu login. Simpan progresmu dan dapatkan dokumen rencana aksi karyamu secara instan!
+            Susun rencana karyamu melalui empat tahap sederhana tanpa perlu login. Progres tersimpan otomatis dan hasilnya bisa kamu unduh.
           </p>
         </motion.div>
 
-        {/* ==================================================== */}
-        {/* VIEW 1: FINAL RESULT CARD (Setelah Submit)            */}
-        {/* ==================================================== */}
         {isSubmitted ? (
           <motion.div
             initial={{ opacity: 0, scale: 0.97 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.4 }}
-            className="space-y-8"
-          >
+            className="space-y-8">
             <div className="text-center max-w-xl mx-auto space-y-2">
               <span className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-heading font-bold border border-emerald-300">
                 <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
@@ -364,12 +348,10 @@ export default function KaryaPlanner() {
               </p>
             </div>
 
-            {/* Exportable Result Card Centered Frame */}
             <div className="w-full flex items-center justify-center">
               <div
                 ref={resultCardRef}
-                className="w-full max-w-2xl p-3 sm:p-6 bg-[#FFFDF7] rounded-3xl flex items-center justify-center"
-              >
+                className="w-full max-w-2xl p-3 sm:p-6 bg-[#FFFDF7] rounded-3xl flex items-center justify-center">
                 <ResultCard
                   interest={effectiveInterest}
                   impact={effectiveImpact}
@@ -379,7 +361,6 @@ export default function KaryaPlanner() {
               </div>
             </div>
 
-            {/* Action Buttons: Unduh, Bagikan, Edit, Buat Baru */}
             <ActionButtons
               onDownload={handleDownload}
               onShare={handleShare}
@@ -389,27 +370,19 @@ export default function KaryaPlanner() {
             />
           </motion.div>
         ) : (
-          /* ==================================================== */
-          /* VIEW 2: MULTI-STEP FORM + LIVE PREVIEW               */
-          /* ==================================================== */
           <div className="space-y-8">
-            {/* Step Indicator */}
             <StepIndicator
               currentStep={currentStep}
               maxUnlockedStep={maxUnlockedStep}
               onSelectStep={(stepId) => {
                 setErrors({})
                 setCurrentStep(stepId)
-              }}
-            />
+              }} />
 
-            {/* Form (Left) & Live Preview (Right) */}
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start">
-              {/* Left Column: Form Steps */}
               <div className="lg:col-span-7 space-y-6">
                 <div className="p-4 sm:p-7 rounded-2xl sm:rounded-3xl bg-white border-2 border-brand-dark shadow-brutal space-y-5 sm:space-y-6">
                   <AnimatePresence mode="wait">
-                    {/* ================= STEP 1: INTEREST ================= */}
                     {currentStep === 1 && (
                       <motion.div
                         key="step-1"
@@ -457,14 +430,12 @@ export default function KaryaPlanner() {
                           ))}
                         </div>
 
-                        {/* Custom Write-in Field for Interest */}
                         {interest === 'Lainnya' && (
                           <motion.div
                             initial={{ opacity: 0, y: -6 }}
                             animate={{ opacity: 1, y: 0 }}
                             exit={{ opacity: 0, y: -6 }}
-                            className="pt-2 space-y-1.5"
-                          >
+                            className="pt-2 space-y-1.5">
                             <label className="block text-xs font-heading font-black text-brand-dark flex items-center gap-1.5">
                               <PenTool className="w-3.5 h-3.5 text-brand-dark" />
                               <span>Tuliskan Bidang Minat Karyamu:</span>
@@ -479,8 +450,7 @@ export default function KaryaPlanner() {
                               }}
                               placeholder="Tuliskan bidang minat karyamu di sini (misal: Kuliner, Musik, Sains)..."
                               maxLength={50}
-                              className="w-full px-4 py-3 rounded-xl bg-brand-cream border-2 border-brand-dark text-sm sm:text-base font-sans font-medium text-brand-dark placeholder-brand-muted/60 focus:outline-none focus:ring-2 focus:ring-brand-lavender shadow-brutal-sm transition-all"
-                            />
+                              className="w-full px-4 py-3 rounded-xl bg-brand-cream border-2 border-brand-dark text-sm sm:text-base font-sans font-medium text-brand-dark placeholder-brand-muted/60 focus:outline-none focus:ring-2 focus:ring-brand-lavender shadow-brutal-sm transition-all" />
                             <p className="text-[11px] font-sans text-brand-muted">
                               Tuliskan bidang spesifik yang sesuai dengan minat dan keahlianmu.
                             </p>
@@ -489,7 +459,6 @@ export default function KaryaPlanner() {
                       </motion.div>
                     )}
 
-                    {/* ================= STEP 2: IMPACT AREA ================= */}
                     {currentStep === 2 && (
                       <motion.div
                         key="step-2"
@@ -497,8 +466,7 @@ export default function KaryaPlanner() {
                         animate={{ opacity: 1, x: 0 }}
                         exit={{ opacity: 0, x: -16 }}
                         transition={{ duration: 0.25 }}
-                        className="space-y-4"
-                      >
+                        className="space-y-4">
                         <div>
                           <div className="flex items-center justify-between">
                             <span className="text-xs font-mono font-bold uppercase tracking-wider text-brand-lavender bg-brand-dark px-2.5 py-0.5 rounded-md">
@@ -536,7 +504,6 @@ export default function KaryaPlanner() {
                           ))}
                         </div>
 
-                        {/* Custom Write-in Field for Impact */}
                         {impact === 'Lainnya' && (
                           <motion.div
                             initial={{ opacity: 0, y: -6 }}
@@ -568,7 +535,6 @@ export default function KaryaPlanner() {
                       </motion.div>
                     )}
 
-                    {/* ================= STEP 3: IDEA ================= */}
                     {currentStep === 3 && (
                       <motion.div
                         key="step-3"
@@ -602,10 +568,8 @@ export default function KaryaPlanner() {
                             value={idea}
                             onChange={(e) => handleChangeIdea(e.target.value)}
                             placeholder="Contoh: Membuat platform kurasi materi belajar coding gratis berbahasa Indonesia untuk mahasiswa dan UMKM lokal..."
-                            className={`w-full p-4 rounded-2xl bg-brand-cream border-2 text-sm sm:text-base font-sans font-medium text-brand-dark placeholder-brand-muted/60 focus:outline-none focus:ring-2 focus:ring-brand-lavender transition-all resize-none ${
-                              errors.idea ? 'border-rose-500 bg-rose-50/50' : 'border-brand-dark'
-                            }`}
-                          />
+                            className={`w-full p-4 rounded-2xl bg-brand-cream border-2 text-sm sm:text-base font-sans font-medium text-brand-dark placeholder-brand-muted/60 focus:outline-none focus:ring-2 focus:ring-brand-lavender transition-all resize-none ${errors.idea ? 'border-rose-500 bg-rose-50/50' : 'border-brand-dark'
+                              }`} />
 
                           <div className="flex items-center justify-between text-xs font-sans">
                             {errors.idea ? (
@@ -614,9 +578,8 @@ export default function KaryaPlanner() {
                               <span className="text-brand-muted">Minimal 5 karakter</span>
                             )}
                             <span
-                              className={`font-mono font-bold ${
-                                idea.length >= 280 ? 'text-amber-600' : 'text-brand-muted'
-                              }`}
+                              className={`font-mono font-bold ${idea.length >= 280 ? 'text-amber-600' : 'text-brand-muted'
+                                }`}
                             >
                               {idea.length}/300
                             </span>
@@ -625,7 +588,6 @@ export default function KaryaPlanner() {
                       </motion.div>
                     )}
 
-                    {/* ================= STEP 4: FIRST ACTION ================= */}
                     {currentStep === 4 && (
                       <motion.div
                         key="step-4"
@@ -662,9 +624,8 @@ export default function KaryaPlanner() {
                               if (errors.firstAction) setErrors((prev) => ({ ...prev, firstAction: undefined }))
                             }}
                             placeholder="Contoh: Mengumpulkan 5 modul materi open-source dan merancang struktur navigasi landing page..."
-                            className={`w-full p-4 rounded-2xl bg-brand-cream border-2 text-sm sm:text-base font-sans font-medium text-brand-dark placeholder-brand-muted/60 focus:outline-none focus:ring-2 focus:ring-brand-lavender transition-all resize-none ${
-                              errors.firstAction ? 'border-rose-500 bg-rose-50/50' : 'border-brand-dark'
-                            }`}
+                            className={`w-full p-4 rounded-2xl bg-brand-cream border-2 text-sm sm:text-base font-sans font-medium text-brand-dark placeholder-brand-muted/60 focus:outline-none focus:ring-2 focus:ring-brand-lavender transition-all resize-none ${errors.firstAction ? 'border-rose-500 bg-rose-50/50' : 'border-brand-dark'
+                              }`}
                           />
 
                           <div className="flex items-center justify-between text-xs font-sans">
@@ -674,10 +635,8 @@ export default function KaryaPlanner() {
                               <span className="text-brand-muted">Langkah awal yang realistis dan terukur</span>
                             )}
                             <span
-                              className={`font-mono font-bold ${
-                                firstAction.length >= 280 ? 'text-amber-600' : 'text-brand-muted'
-                              }`}
-                            >
+                              className={`font-mono font-bold ${firstAction.length >= 280 ? 'text-amber-600' : 'text-brand-muted'
+                                }`}>
                               {firstAction.length}/300
                             </span>
                           </div>
@@ -686,7 +645,6 @@ export default function KaryaPlanner() {
                     )}
                   </AnimatePresence>
 
-                  {/* Form Footer Buttons */}
                   <div className="pt-4 border-t-2 border-brand-dark/10 flex flex-col sm:flex-row items-center justify-between gap-3">
                     {currentStep > 1 ? (
                       <motion.button
@@ -694,8 +652,7 @@ export default function KaryaPlanner() {
                         whileTap={{ scale: 0.98 }}
                         type="button"
                         onClick={handlePrev}
-                        className="w-full sm:w-auto px-5 py-3 rounded-full bg-white hover:bg-brand-cream text-brand-dark font-heading font-bold text-xs sm:text-sm border-2 border-brand-dark shadow-brutal-sm flex items-center justify-center gap-2 transition-all"
-                      >
+                        className="w-full sm:w-auto px-5 py-3 rounded-full bg-white hover:bg-brand-cream text-brand-dark font-heading font-bold text-xs sm:text-sm border-2 border-brand-dark shadow-brutal-sm flex items-center justify-center gap-2 transition-all">
                         <ArrowLeft className="w-4 h-4 stroke-[2.5]" />
                         <span>Kembali</span>
                       </motion.button>
@@ -714,8 +671,7 @@ export default function KaryaPlanner() {
                           (currentStep === 2 && (!impact || (impact === 'Lainnya' && !customImpact.trim()))) ||
                           (currentStep === 3 && !idea.trim())
                         }
-                        className="w-full sm:w-auto px-7 py-3.5 rounded-full bg-brand-yellow hover:brightness-105 text-brand-dark font-heading font-black text-sm border-2 border-brand-dark shadow-brutal flex items-center justify-center gap-2 transition-all disabled:opacity-40 disabled:cursor-not-allowed disabled:shadow-none"
-                      >
+                        className="w-full sm:w-auto px-7 py-3.5 rounded-full bg-brand-yellow hover:brightness-105 text-brand-dark font-heading font-black text-sm border-2 border-brand-dark shadow-brutal flex items-center justify-center gap-2 transition-all disabled:opacity-40 disabled:cursor-not-allowed disabled:shadow-none">
                         <span>Lanjut ke Tahap {currentStep + 1}</span>
                         <ArrowRight className="w-4 h-4 stroke-[2.5]" />
                       </motion.button>
@@ -726,8 +682,7 @@ export default function KaryaPlanner() {
                         type="button"
                         onClick={handleSubmit}
                         disabled={!effectiveInterest || !effectiveImpact || !idea.trim() || !firstAction.trim()}
-                        className="w-full sm:w-auto px-8 py-3.5 rounded-full bg-brand-yellow hover:brightness-105 text-brand-dark font-heading font-black text-sm sm:text-base border-2 border-brand-dark shadow-brutal flex items-center justify-center gap-2 transition-all disabled:opacity-40 disabled:cursor-not-allowed disabled:shadow-none"
-                      >
+                        className="w-full sm:w-auto px-8 py-3.5 rounded-full bg-brand-yellow hover:brightness-105 text-brand-dark font-heading font-black text-sm sm:text-base border-2 border-brand-dark shadow-brutal flex items-center justify-center gap-2 transition-all disabled:opacity-40 disabled:cursor-not-allowed disabled:shadow-none">
                         <Sparkles className="w-4 h-4" />
                         <span>Create My Karya Plan</span>
                       </motion.button>
@@ -736,7 +691,6 @@ export default function KaryaPlanner() {
                 </div>
               </div>
 
-              {/* Right Column (Desktop) / Bottom (Mobile): Live Preview */}
               <div className="lg:col-span-5 lg:sticky lg:top-24">
                 <LivePreview
                   interest={interest === 'Lainnya' ? customInterest.trim() : interest}

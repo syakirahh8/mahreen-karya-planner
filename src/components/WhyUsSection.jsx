@@ -1,5 +1,5 @@
 import { motion } from 'motion/react'
-import { Star, ChevronRight, User } from 'lucide-react'
+import { ChevronRight, User } from 'lucide-react'
 
 export default function WhyUsSection() {
   const listItems = [
@@ -15,29 +15,28 @@ export default function WhyUsSection() {
       badgeBg: 'bg-brand-lavender text-brand-dark',
       cardBg: 'bg-white text-brand-dark',
       title: 'Clear & Actionable Steps',
-      desc: 'Panduan taktis anti-overthinking sehingga kamu selalu tahu persis apa yang harus dikerjakan setiap harinya.',
+      desc: 'Ubah ide menjadi langkah-langkah kecil yang lebih jelas, realistis, dan mudah untuk mulai dikerjakan',
     },
     {
       num: '03. Community',
       badgeBg: 'bg-brand-yellow text-brand-dark',
       cardBg: 'bg-white text-brand-dark',
-      title: 'Grow Through Collaboration',
-      desc: 'Terhubung dengan ratusan kreator sefrekuensi untuk saling menyemangati dan memberi feedback konstruktif.',
+      title: 'Share Your Plan',
+      desc: 'Bagikan rencana karyamu agar lebih mudah didiskusikan dan dikembangkan bersama.',
     },
   ]
 
   return (
-    <section id="komunitas" className="relative py-12 sm:py-20 bg-white border-b-2 border-brand-dark/10">
+    <section id="kenapa-mahreen" className="relative py-12 sm:py-20 bg-white border-b-2 border-brand-dark/10">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-          {/* Left Column: Heading & Social Proof */}
+          {/* Heading & Social Proof */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: '-40px' }}
             transition={{ duration: 0.5 }}
-            className="lg:col-span-5 space-y-5 sm:space-y-6"
-          >
+            className="lg:col-span-5 space-y-5 sm:space-y-6">
             <div className="inline-flex">
               <span className="px-3 py-1 rounded-full bg-brand-lavender text-brand-dark font-heading font-extrabold text-[11px] sm:text-xs tracking-wider uppercase border-2 border-brand-dark shadow-brutal-sm">
                 EKOSISTEM KREATIF
@@ -49,55 +48,50 @@ export default function WhyUsSection() {
             </h2>
 
             <p className="text-xs sm:text-base text-brand-muted font-sans font-medium leading-relaxed">
-              Kami hadir untuk mendampingi kreator, pemikir, mahasiswa, dan perancang karya di setiap fase perjalanan mereka dari nol hingga tuntas.
+              Karya Planner membantu kreator, mahasiswa, dan siapa pun yang ingin mengubah ide menjadi langkah awal yang lebih jelas dan terarah.
             </p>
 
-            {/* Social Avatars Proof */}
+            {/* Avatars */}
             <div className="flex flex-wrap items-center gap-3 pt-1 sm:pt-2">
               <div className="flex -space-x-2">
                 {['#FCE762', '#9DA8EC', '#5F6479', '#FFF9E3'].map((bg, idx) => (
                   <div
                     key={idx}
                     style={{ backgroundColor: bg }}
-                    className="w-9 h-9 sm:w-10 sm:h-10 rounded-full border-2 border-brand-dark flex items-center justify-center font-heading font-bold text-xs shadow-brutal-sm shrink-0"
-                  >
+                    className="w-9 h-9 sm:w-10 sm:h-10 rounded-full border-2 border-brand-dark flex items-center justify-center font-heading font-bold text-xs shadow-brutal-sm shrink-0">
                     <User className="w-4 h-4 sm:w-5 sm:h-5 text-brand-dark" />
                   </div>
                 ))}
               </div>
               <div className="text-xs font-sans">
-                <div className="flex items-center gap-1 text-brand-dark font-heading font-extrabold">
-                  <Star className="w-3.5 h-3.5 fill-brand-yellow text-brand-dark" />
-                  <span>4.9 / 5.0 Rating</span>
-                </div>
-                <p className="text-brand-muted font-medium">Dipercaya 1,500+ kreator muda</p>
+                <p className="text-brand-dark font-heading font-extrabold">Komunitas Kreatif</p>
+                <p className="text-brand-muted font-medium">Ruang bertukar gagasan & berkarya bersama</p>
               </div>
             </div>
 
-            {/* Metrics Box */}
+            {/* Pillars Box */}
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.45, delay: 0.2 }}
-              className="grid grid-cols-3 gap-1.5 sm:gap-3 p-3 sm:p-4 rounded-2xl bg-brand-cream border-2 border-brand-dark shadow-brutal text-center"
-            >
+              className="grid grid-cols-3 gap-1.5 sm:gap-3 p-3 sm:p-4 rounded-2xl bg-brand-cream border-2 border-brand-dark shadow-brutal text-center">
               <div>
-                <p className="text-lg sm:text-2xl font-heading font-black text-brand-dark">1500+</p>
-                <p className="text-[10px] sm:text-[11px] font-sans font-bold text-brand-muted">Karya Jadi</p>
+                <p className="text-sm sm:text-base font-heading font-black text-brand-dark">Fokus</p>
+                <p className="text-[10px] sm:text-[11px] font-sans font-bold text-brand-muted">Gagasan Jelas</p>
               </div>
               <div className="border-x-2 border-brand-dark/20 px-1">
-                <p className="text-lg sm:text-2xl font-heading font-black text-brand-dark">24</p>
-                <p className="text-[10px] sm:text-[11px] font-sans font-bold text-brand-muted">Komunitas</p>
+                <p className="text-sm sm:text-base font-heading font-black text-brand-dark">Aksi</p>
+                <p className="text-[10px] sm:text-[11px] font-sans font-bold text-brand-muted">Langkah Nyata</p>
               </div>
               <div>
-                <p className="text-lg sm:text-2xl font-heading font-black text-brand-dark">98.5%</p>
-                <p className="text-[10px] sm:text-[11px] font-sans font-bold text-brand-muted">Kepuasan</p>
+                <p className="text-sm sm:text-base font-heading font-black text-brand-dark">Dampak</p>
+                <p className="text-[10px] sm:text-[11px] font-sans font-bold text-brand-muted">Beri Manfaat</p>
               </div>
             </motion.div>
           </motion.div>
 
-          {/* Right Column: 3 Feature Cards */}
+          {/* 3 Feature Cards */}
           <div className="lg:col-span-7 space-y-4">
             {listItems.map((item, idx) => (
               <motion.div
@@ -107,12 +101,10 @@ export default function WhyUsSection() {
                 viewport={{ once: true, margin: '-40px' }}
                 transition={{ duration: 0.45, delay: idx * 0.12 }}
                 whileHover={{ y: -4, transition: { duration: 0.2 } }}
-                className={`${item.cardBg} border-2 border-brand-dark rounded-2xl p-6 shadow-brutal hover:shadow-brutal-lg transition-shadow group cursor-default`}
-              >
+                className={`${item.cardBg} border-2 border-brand-dark rounded-2xl p-6 shadow-brutal hover:shadow-brutal-lg transition-shadow group cursor-default`}>
                 <div className="flex items-center justify-between mb-3">
                   <span
-                    className={`text-xs font-heading font-extrabold px-3 py-0.5 rounded-full border border-brand-dark ${item.badgeBg}`}
-                  >
+                    className={`text-xs font-heading font-extrabold px-3 py-0.5 rounded-full border border-brand-dark ${item.badgeBg}`}>
                     {item.num}
                   </span>
                   <ChevronRight className="w-5 h-5 text-brand-muted group-hover:translate-x-1 transition-transform" />
