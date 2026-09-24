@@ -182,27 +182,45 @@ export default function KaryaPlanner() {
     }
 
     setIsSubmitted(true)
-    setToastMessage('Karya Plan berhasil dibuat! 🎉')
+    setToastMessage('Karya Plan berhasil dibuat.')
   }
 
-  // Action: Unduh Karya Plan PNG
+  // Action: Unduh Karya Plan PNG (Full, Centered, and Crystal Clear)
   const handleDownload = async () => {
     if (!resultCardRef.current) return
     setIsDownloading(true)
     try {
-      const dataUrl = await toPng(resultCardRef.current, {
+      const node = resultCardRef.current
+      const width = node.offsetWidth
+      const height = node.offsetHeight
+
+      const dataUrl = await toPng(node, {
         cacheBust: true,
-        pixelRatio: 3, // Ultra-sharp crystal quality
+        pixelRatio: 2.5,
         backgroundColor: '#FFFDF7',
-        quality: 1,
+        width: width,
+        height: height,
+        style: {
+          margin: '0',
+          position: 'static',
+          transform: 'none',
+          left: '0',
+          top: '0',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          width: `${width}px`,
+          maxWidth: `${width}px`,
+          boxSizing: 'border-box',
+        },
       })
       const link = document.createElement('a')
       const safeInterest = (interest || 'Kreator').replace(/[^a-zA-Z0-9]/g, '')
-      const fileName = `Mahreen-KaryaPlan-${safeInterest}-${Date.now().toString().slice(-4)}.png`
+      const fileName = `Mahreen-KaryaPlan-${safeInterest}.png`
       link.download = fileName
       link.href = dataUrl
       link.click()
-      setToastMessage('Karya Plan berhasil diunduh dalam kualitas Ultra-HD! 📥✨')
+      setToastMessage('Karya Plan berhasil diunduh.')
     } catch (err) {
       console.error(err)
       setToastMessage('Gagal mengunduh gambar. Silakan coba lagi.')
@@ -213,7 +231,7 @@ export default function KaryaPlanner() {
 
   // Action: Bagikan Karya
   const handleShare = async () => {
-    const shareText = `Halo! Ini rencana karyaku di bidang ${interest} untuk berdampak pada ${impact}:\n\n💡 Ide: ${idea}\n🚀 Langkah Pertama: ${firstAction}\n\n#BerkaryaUntukIndonesia via Mahreen Karya Planner`
+    const shareText = `Halo! Ini rencana karyaku di bidang ${interest} untuk berdampak pada ${impact}:\n\nIde: ${idea}\nLangkah Pertama: ${firstAction}\n\n#BerkaryaUntukIndonesia via Mahreen Karya Planner`
 
     if (navigator.share) {
       try {
@@ -222,14 +240,14 @@ export default function KaryaPlanner() {
           text: shareText,
           url: window.location.href,
         })
-        setToastMessage('Berhasil dibagikan! ✨')
+        setToastMessage('Berhasil dibagikan.')
       } catch {
         // User cancelled or fallback
       }
     } else {
       try {
         await navigator.clipboard.writeText(shareText)
-        setToastMessage('Teks rencana karya telah disalin ke clipboard! 📋')
+        setToastMessage('Teks rencana karya telah disalin ke clipboard.')
       } catch {
         setToastMessage('Gagal menyalin ke clipboard.')
       }
@@ -254,7 +272,7 @@ export default function KaryaPlanner() {
       setMaxUnlockedStep(1)
       setIsSubmitted(false)
       setErrors({})
-      setToastMessage('Rencana telah direset. Siap membuat karya baru! 🚀')
+      setToastMessage('Rencana telah direset. Siap membuat karya baru.')
     }
   }
 
@@ -291,21 +309,27 @@ export default function KaryaPlanner() {
                 Rencana Karya Siap Dieksekusi
               </span>
               <h3 className="text-2xl sm:text-3xl font-heading font-black text-brand-dark">
-                Selamat! Rencana Karyamu Terbit 🎉
+                Selamat! Rencana Karyamu Siap
               </h3>
               <p className="text-xs sm:text-sm text-brand-muted font-sans font-medium">
                 Simpan atau unduh kartu rencana karyamu untuk pengingat setiap harinya.
               </p>
             </div>
 
-            {/* Exportable Result Card */}
-            <ResultCard
-              ref={resultCardRef}
-              interest={interest}
-              impact={impact}
-              idea={idea}
-              firstAction={firstAction}
-            />
+            {/* Exportable Result Card Centered Frame */}
+            <div className="w-full flex items-center justify-center">
+              <div
+                ref={resultCardRef}
+                className="w-full max-w-2xl p-3 sm:p-6 bg-[#FFFDF7] rounded-3xl flex items-center justify-center"
+              >
+                <ResultCard
+                  interest={interest}
+                  impact={impact}
+                  idea={idea}
+                  firstAction={firstAction}
+                />
+              </div>
+            </div>
 
             {/* Action Buttons: Unduh, Bagikan, Edit, Buat Baru */}
             <ActionButtons

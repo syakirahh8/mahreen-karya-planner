@@ -1,5 +1,5 @@
 import { forwardRef } from 'react'
-import { Sparkles, Compass, Heart, Lightbulb, Footprints, Award, ShieldCheck, CheckCircle2 } from 'lucide-react'
+import { Sparkles, Compass, Target, Lightbulb, Footprints, Award, ShieldCheck, CheckCircle2 } from 'lucide-react'
 
 const ResultCard = forwardRef(function ResultCard(
   {
@@ -18,20 +18,14 @@ const ResultCard = forwardRef(function ResultCard(
     <div
       ref={ref}
       id="karya-plan-result-card"
-      className="w-full max-w-2xl mx-auto rounded-3xl bg-[#FFFDF7] border-4 border-brand-dark p-6 sm:p-10 shadow-brutal-lg space-y-6 sm:space-y-7 relative overflow-hidden"
+      className="w-full max-w-2xl rounded-3xl bg-[#FFFDF7] border-4 border-brand-dark p-6 sm:p-10 shadow-brutal-lg space-y-6 sm:space-y-7 relative overflow-hidden"
     >
-      {/* Decorative corner registration marks */}
-      <span className="absolute top-3 left-3 text-brand-dark/25 font-mono text-xs select-none pointer-events-none">＋</span>
-      <span className="absolute top-3 right-3 text-brand-dark/25 font-mono text-xs select-none pointer-events-none">＋</span>
-      <span className="absolute bottom-3 left-3 text-brand-dark/25 font-mono text-xs select-none pointer-events-none">＋</span>
-      <span className="absolute bottom-3 right-3 text-brand-dark/25 font-mono text-xs select-none pointer-events-none">＋</span>
-
       {/* Decorative background glows */}
-      <div className="absolute -top-16 -right-16 w-56 h-56 bg-brand-yellow/25 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute -bottom-16 -left-16 w-56 h-56 bg-brand-lavender/25 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute -top-16 -right-16 w-56 h-56 bg-brand-yellow/20 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute -bottom-16 -left-16 w-56 h-56 bg-brand-lavender/20 rounded-full blur-3xl pointer-events-none" />
 
       {/* Top Header Card */}
-      <div className="flex flex-col sm:flex-row sm:items-start justify-between border-b-3 border-brand-dark pb-5 relative z-10 gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-start justify-between border-b-2 sm:border-b-[3px] border-brand-dark pb-5 relative z-10 gap-4">
         <div className="space-y-2">
           <div className="flex items-center gap-2 flex-wrap">
             <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-brand-dark text-brand-yellow text-[10px] sm:text-xs font-heading font-black tracking-wider uppercase shadow-brutal-sm">
@@ -87,7 +81,7 @@ const ResultCard = forwardRef(function ResultCard(
         <div className="p-4 sm:p-4.5 rounded-2xl bg-brand-yellow/30 border-2 border-brand-dark shadow-brutal-sm space-y-1">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-1.5 text-brand-dark font-heading font-extrabold text-[11px] uppercase tracking-wider">
-              <Heart className="w-3.5 h-3.5 text-rose-500 fill-rose-500" />
+              <Target className="w-3.5 h-3.5 text-brand-dark stroke-[2.5]" />
               <span>TARGET DAMPAK</span>
             </div>
             <span className="w-2 h-2 rounded-full bg-brand-dark" />
@@ -139,7 +133,7 @@ const ResultCard = forwardRef(function ResultCard(
       </div>
 
       {/* Footer Banner with Hashtag & Mahreen Platform Branding */}
-      <div className="pt-4 border-t-3 border-brand-dark flex flex-col sm:flex-row items-center justify-between gap-3 relative z-10">
+      <div className="pt-4 border-t-2 sm:border-t-[3px] border-brand-dark flex flex-col sm:flex-row items-center justify-between gap-3 relative z-10">
         <div className="flex items-center gap-2">
           <span className="px-3.5 py-1 rounded-full bg-brand-yellow text-brand-dark font-heading font-black text-xs sm:text-sm border-2 border-brand-dark shadow-brutal-sm">
             #BerkaryaUntukIndonesia

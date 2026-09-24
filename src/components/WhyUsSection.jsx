@@ -1,4 +1,4 @@
-import { Star, ChevronRight } from 'lucide-react'
+import { Star, ChevronRight, User } from 'lucide-react'
 
 export default function WhyUsSection() {
   const listItems = [
@@ -54,7 +54,7 @@ export default function WhyUsSection() {
                     style={{ backgroundColor: bg }}
                     className="w-9 h-9 sm:w-10 sm:h-10 rounded-full border-2 border-brand-dark flex items-center justify-center font-heading font-bold text-xs shadow-brutal-sm shrink-0"
                   >
-                    👤
+                    <User className="w-4 h-4 sm:w-5 sm:h-5 text-brand-dark" />
                   </div>
                 ))}
               </div>
